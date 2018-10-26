@@ -22,11 +22,10 @@ func main() {
 
 	sortedArr := make([]string, len(arr))
 	copy(sortedArr, arr)
-	sort.Sort(ByLen(sortedArr))
-	print(sortedArr[0])
+	sort.Sort(byLen(sortedArr))
 
 	answer := split(line, sortedArr)
- 
+
 	for k, v := range answer {
 		if k != 0 {
 			print(",")
@@ -59,7 +58,7 @@ func readSubstrings(path string, maxSize int) ([]string, error) {
 	return substrings, scanner.Err()
 }
 
-// split line by sublines
+// split line by sublines /////////////////////////////////////////////////////
 func split(line string, array []string) []string {
 	var answer []string
 
@@ -77,17 +76,19 @@ func split(line string, array []string) []string {
 	return answer
 }
 
-type ByLen []string
+type byLen []string
 
-func (a ByLen) Len() int           { return len(a) }
-func (a ByLen) Less(i, j int) bool { return len(a[i]) > len(a[j]) }
-func (a ByLen) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a byLen) Len() int           { return len(a) }
+func (a byLen) Less(i, j int) bool { return len(a[i]) > len(a[j]) }
+func (a byLen) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
+// indexOf - returns the index of the element in the original slice ///////////
 func indexOf(element string, data []string) int {
 	for k, v := range data {
 		if element == v {
 			return k
 		}
 	}
-	return -1 //not found.
+
+	return -1
 }
