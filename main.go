@@ -20,19 +20,30 @@ func main() {
 		panic(err)
 	}
 
-	sortedArr := make([]string, len(arr))
-	copy(sortedArr, arr)
-	sort.Sort(byLen(sortedArr))
+	// save substrings original ids ///////////////////////////////////////////
+	arrMap := make(map[string]int)
+	for k, v := range arr {
+		arrMap[v] = k
+	}
 
-	answer := split(line, sortedArr)
+	sort.Sort(byLen(arr))
+
+	answer := split(line, arr)
 
 	for k, v := range answer {
 		if k != 0 {
 			print(",")
 		}
-		print(indexOf(v, arr))
+		print(arrMap[v])
 	}
 }
+
+// sort interface /////////////////////////////////////////////////////////////
+type byLen []string
+
+func (a byLen) Len() int           { return len(a) }
+func (a byLen) Less(i, j int) bool { return len(a[i]) > len(a[j]) }
+func (a byLen) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
 // readSubstrings - read file and collect substrings //////////////////////////
 // assume that Id always start at 0, and the numbers are consecutive //////////
@@ -74,22 +85,4 @@ func split(line string, array []string) []string {
 	}
 
 	return answer
-}
-
-// sort interface /////////////////////////////////////////////////////////////
-type byLen []string
-
-func (a byLen) Len() int           { return len(a) }
-func (a byLen) Less(i, j int) bool { return len(a[i]) > len(a[j]) }
-func (a byLen) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-
-// indexOf - returns the index of the element in the original slice ///////////
-func indexOf(element string, data []string) int {
-	for k, v := range data {
-		if element == v {
-			return k
-		}
-	}
-
-	return -1
 }
