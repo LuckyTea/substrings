@@ -76,6 +76,7 @@ func split(line string, array []string) []string {
 	return answer
 }
 
+// sort interface /////////////////////////////////////////////////////////////
 type byLen []string
 
 func (a byLen) Len() int           { return len(a) }
